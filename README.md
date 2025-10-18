@@ -1,17 +1,14 @@
 # hello-world
 
-@Override
-public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-    super.onInitializeAccessibilityNodeInfo(info);
-    info.setContentDescription("Graph showing sales for October");
+
+
+AccessibilityManager am = 
+    (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
+if (am.isEnabled()) {
+    AccessibilityEvent event = AccessibilityEvent.obtain(
+        AccessibilityEvent.TYPE_ANNOUNCEMENT);
+    event.setClassName(getClass().getName());
+    event.setPackageName(getPackageName());
+    event.getText().add("New content loaded in web view");
+    am.sendAccessibilityEvent(event);
 }
-
-
-View customView = new View(this);
-ViewCompat.setAccessibilityDelegate(customView, new AccessibilityDelegateCompat() {
-    @Override
-    public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
-        super.onInitializeAccessibilityNodeInfo(host, info);
-        info.setContentDescription("Custom dynamic view showing temperature chart");
-    }
-});
